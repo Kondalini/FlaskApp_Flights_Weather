@@ -1,7 +1,14 @@
 from flask import Flask, request, jsonify
+from flask import render_template
+
 import requests
 
 app = Flask(__name__)
+
+@app.route('/')
+def home():
+   return render_template('index.html')  # This will render index.html
+
 
 # API keys
 WEATHER_API_KEY = '93980c5df83ff5b63ff872da7dd478ea'
@@ -104,5 +111,5 @@ def get_future_flights():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port= 8000)
+    app.run(debug=True, host='0.0.0.0')
 

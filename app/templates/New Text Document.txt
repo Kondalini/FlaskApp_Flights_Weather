@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight and Weather App</title>
+</head>
+<body>
+    <h1>Flight and Weather App</h1>
+
+    <h2>Weather Information</h2>
+    <input type="text" id="weatherCity" placeholder="Enter city">
+    <button onclick="fetchWeather()">Get Weather</button>
+    <div id="weatherResult"></div>
+
+    <h2>Current Flights</h2>
+    <input type="text" id="departureCity" placeholder="Departure city">
+    <input type="text" id="arrivalCity" placeholder="Arrival city">
+    <button onclick="fetchFlights()">Get Flights</button>
+    <div id="flightsResult"></div>
+
+    <h2>Future Flights</h2>
+    <input type="text" id="futureDepartureCity" placeholder="Departure city">
+    <input type="text" id="futureArrivalCity" placeholder="Arrival city">
+    <input type="date" id="flightDate">
+    <button onclick="fetchFutureFlights()">Get Future Flights</button>
+    <div id="futureFlightsResult"></div>
+
+    <script>
+        async function fetchWeather() {
+            const city = document.getElementById('weatherCity').value;
+            const response = await fetch(`/weather?city=${city}`);
+            const data = await response.json();
+            document.getElementById('weatherResult').innerText = 
+                data.error ? data.error : `Weather in ${data.city}: ${data.temperature}°C, ${data.description}`;
+        }
+
+        async function fetchFlights() {
+            const departureCity = document.getElementById('departureCity').value;
+            const arrivalCity = document.getElementById('arrivalCity').value;
+            const response = await fetch(`/flights?departure_city=${departureCity}&arrival_city=${arrivalCity}`);
+            const data = await response.json();
+            document.getElementById('flightsResult').innerText = 
+                data.error ? data.error : JSON.stringify(data.flights, null, 2);
+        }
+
+        async function fetchFutureFlights() {
+            const departureCity = document.getElementById('futureDepartureCity').value;
+            const arrivalCity = document.getElementById('futureArrivalCity').value;
+            const flightDate = document.getElementById('flightDate').value;
+            const response = await fetch(`/future-flights?departure_city=${departureCity}&arrival_city=${arrivalCity}&flight_date=${flightDate}`);
+            const data = await response.json();
+            document.getElementById('futureFlightsResult').innerText = 
+                data.error ? data.error : JSON.stringify(data.flights, null, 2);
+        }
+    </script>
+</body>
+</html>
