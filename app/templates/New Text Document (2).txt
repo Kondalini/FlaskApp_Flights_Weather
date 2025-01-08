@@ -36,42 +36,24 @@ async function fetchWeather() {
     const data = await response.text(); // Process response as plain text
     document.getElementById('weatherResult').innerText = data; // Display plain text
 }
+
+ 
 async function fetchFlights() {
-    let departureCity = document.getElementById('departureCity').value.trim();
-    let arrivalCity = document.getElementById('arrivalCity').value.trim();
-
-    // Convert both cities to proper case (first letter uppercase, rest lowercase)
-    departureCity = formatCityName(departureCity);
-    arrivalCity = formatCityName(arrivalCity);
-
-    // Proceed with the fetch request after formatting
+    const departureCity = document.getElementById('departureCity').value;
+    const arrivalCity = document.getElementById('arrivalCity').value;
     const response = await fetch(`/flights?departure_city=${departureCity}&arrival_city=${arrivalCity}`);
-    const data = await response.text();
-    document.getElementById('flightsResult').innerText = data;
+    const data = await response.text(); // Process response as plain text
+    document.getElementById('flightsResult').innerText = data; // Display plain text
 }
 
 async function fetchFutureFlights() {
-    let departureCity = document.getElementById('futureDepartureCity').value.trim();
-    let arrivalCity = document.getElementById('futureArrivalCity').value.trim();
-
-    // Convert both cities to proper case (first letter uppercase, rest lowercase)
-    departureCity = formatCityName(departureCity);
-    arrivalCity = formatCityName(arrivalCity);
-
+    const departureCity = document.getElementById('futureDepartureCity').value;
+    const arrivalCity = document.getElementById('futureArrivalCity').value;
     const flightDate = document.getElementById('flightDate').value;
     const response = await fetch(`/future-flights?departure_city=${departureCity}&arrival_city=${arrivalCity}&flight_date=${flightDate}`);
-    const data = await response.text();
-    document.getElementById('futureFlightsResult').innerText = data;
+    const data = await response.text(); // Process response as plain text
+    document.getElementById('futureFlightsResult').innerText = data; // Display plain text
 }
-
-// Function to format city name to proper case (first letter uppercase, rest lowercase)
-function formatCityName(cityName) {
-    if (cityName && cityName.length > 0) {
-        return cityName.charAt(0).toUpperCase() + cityName.slice(1).toLowerCase();
-    }
-    return cityName; // Return city name if it's empty
-}
- 
  </script>
 </body>
 </html>
